@@ -14,7 +14,8 @@ ENV GDAL_CONFIG=/usr/bin/gdal-config
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org geopandas shapely
 
+RUN pip install -r requirements.txt
+EXPOSE 5000
 # Run the script when the container launches
-CMD ["python", "your_script.py"]
+CMD ["python", "app.py"]
