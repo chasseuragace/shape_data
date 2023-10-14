@@ -66,3 +66,38 @@ If you would like to contribute to this project, please fork the repository and 
 ## License
 
 This project is yet to be licensed under the MIT License 
+
+```
+
+This command maps the port 5000 of the container to your local machine's port, allowing you to access the API via a web browser.
+
+### Accessing the API
+
+The API can be accessed through a web browser or via HTTP requests. Here's an example request URL:
+
+```
+http://localhost:5000/get_infos?lat=27.7172&lon=85.3240
+```
+
+Replace the `lat` and `lon` query parameters with your desired latitude and longitude coordinates.
+
+## API Endpoints
+
+- `/get_infos`: This endpoint accepts GET requests with `lat` and `lon` query parameters and returns information about the administrative units containing the specified coordinates.
+
+## Additional Functionality
+
+The API can also list the contents of the current directory by sending a GET request to `/list_directory`.
+
+## Dependencies
+
+- Flask: A lightweight Python web framework.
+- Geopandas: A library for working with geospatial data.
+
+## Contributing
+
+If you would like to contribute to this project, please fork the repository and submit a pull request with your changes.
+
+## License
+
+This project is yet to be licensed under the MIT License 
