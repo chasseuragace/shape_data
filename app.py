@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import os
 import geopandas as gpd
 import time
+import requests
 from shapely.geometry import Point
 
 app = Flask(__name__)
@@ -117,6 +118,24 @@ def get_directory_list():
 
     return jsonify(result)
 
+
+@app.route('/getmovie')
+def get_movie_info():
+    # Define the Jikan API URL with the query parameter
+    jikan_url = 'https://api.jikan.moe/v4/anime?q=Naruto&sfw'
+
+    try:
+        # Send a GET request to the Jikan API
+        response = requests.get(jikan_url)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+
+        # Parse the JSON response from the Jikan API
+        movie_info = response.json()
+
+        # Return the movie info as JSON response
+        return jsonify(movie_info)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
