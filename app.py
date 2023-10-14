@@ -8,7 +8,7 @@ from shapely.geometry import Point
 app = Flask(__name__)
 
 # Define the directory paths for h1 and h2
-directory_paths = ["/app/h_data/h2", "/app/h_data/h1"]
+directory_paths = ["/app/h_data/h2", "/app/h_data/h1","/app/h_data/h3"]
 
 
 import os
@@ -21,10 +21,11 @@ def load_shapefiles(lat, lon, approach="default"):
         for directory_path in directory_paths:
             if os.path.exists(directory_path):
                 for root, _, files in os.walk(directory_path):
+                    print(f"Processing directory: {directory_path}")
                     for shp_filename in files:
                          if shp_filename.lower().endswith(".shp"):
                             shp_path = os.path.join(root, shp_filename)
-
+                            print(f"Processing file: {shp_path}")
                             gdf = gpd.read_file(shp_path)
                             point = Point(lon, lat)
                             admin_unit = gdf[gdf.geometry.contains(point)]
