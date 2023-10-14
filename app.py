@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import os
 import geopandas as gpd
+import time
 from shapely.geometry import Point
 
 app = Flask(__name__)
@@ -72,14 +73,25 @@ def get_infos():
                 # Create a shapely Point object from the lat/lon coordinates
                 point = Point(lon, lat)
 
-                # Use the GeoDataFrame's "contains" method to find the administrative unit that contains the point
-                admin_unit = gdf[gdf.geometry.contains(point)]
+                # Record the start time for query execution
+                start_time = time.time()
 
-                # If an administrative unit is found, extract the attributes and add them to the result
-                if not admin_unit.empty:
-                    attrs = admin_unit.iloc[0].to_dict()
+                # Use the GeoDataFrame's "contains" method to find the administrative units that contain the point
+                admin_units = gdf[gdf.geometry.contains(point)]
+
+                # Record the end time for query execution
+                end_time = time.time()
+                query_time = end_time - start_time
+
+                # Iterate through all the found administrative units and extract attributes
+                for _, admin_unit in admin_units.iterrows():
+                    attrs = admin_unit.to_dict()
                     # Append the keys and values (excluding "geometry") to the result list
                     keys_values = {key: value for key, value in attrs.items() if key != "geometry"}
+                    # Include the filename where the data is found from
+                    keys_values["filename"] = file
+                    # Include the query time in seconds
+                    keys_values["query_time"] = query_time
                     result.append(keys_values)
 
     if result:
