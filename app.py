@@ -103,6 +103,19 @@ def get_info_gpd():
     else:
         return jsonify({"message": "No administrative units found for the given coordinates."}), 404
 
+@app.route('/get_directory_list', methods=['GET'])
+def get_directory_list():
+    result = []
+    # Get the content of the current directory (container's working directory)
+    current_directory = os.getcwd()
+    current_directory_contents = os.listdir(current_directory)
+
+    # Add the current directory's contents to the result
+    result.append(f"Contents of current directory ({current_directory}):")
+    for item in current_directory_contents:
+        result.append(item)
+
+    return jsonify(result)
 
 
 if __name__ == '__main__':
