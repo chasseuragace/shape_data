@@ -1,5 +1,5 @@
 
-```
+
 version: '3'
 services:
   geospatial-api:
@@ -7,6 +7,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: geospatial-api
+    # networks:
+    #   - nginx_NNET
     ports:
       - "5000:5000"
-```
+# networks:
+#   nginx_NNET:
+#     external: true
+
+

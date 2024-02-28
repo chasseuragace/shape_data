@@ -1,11 +1,11 @@
 # Use an official Python runtime as a parent image
-FROM python:3.8
+FROM python:3.8-slim
 
 # Set the working directory to your project directory
 WORKDIR /app
 
 # Install GDAL
-RUN apt-get update && apt-get install -y libgdal-dev
+RUN apt-get update && apt-get install -y  build-essential libgdal-dev
 
 # Set GDAL_CONFIG environment variable
 ENV GDAL_CONFIG=/usr/bin/gdal-config
